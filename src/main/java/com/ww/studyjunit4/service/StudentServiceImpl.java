@@ -1,11 +1,15 @@
 package com.ww.studyjunit4.service;
 
+import com.ww.studyjunit4.constant.DeleteState;
 import com.ww.studyjunit4.entity.Student;
 import com.ww.studyjunit4.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author: Sun
@@ -48,6 +52,21 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void deleteStudent(Student student) {
-        studentRepository.deleteById(student.getId());
+        Optional<Student> byId = studentRepository.findById(student.getId());
+        if (byId.isPresent()) {
+            byId.get().setDeleteState(DeleteState.DELETED);
+            studentRepository.saveAndFlush(byId.get());
+        }
+    }
+
+    @Override
+    public List<Student> findAll() {
+        return studentRepository.findAll();
+    }
+
+    @Override
+    public Student findById(Student student) {
+        Optional<Student> byId = studentRepository.findById(student.getId());
+        return byId.orElse(null);
     }
 }

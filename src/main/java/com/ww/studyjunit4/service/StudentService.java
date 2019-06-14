@@ -3,6 +3,7 @@ package com.ww.studyjunit4.service;
 import com.ww.studyjunit4.entity.Student;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author: Sun
@@ -22,4 +23,8 @@ public interface StudentService {
     List<Student> findAllByStudentIdReturnList(Student student);
 
     void deleteStudent(Student student);
+
+    List<Student> findAll();
+
+    Student findById(Student student);
 }

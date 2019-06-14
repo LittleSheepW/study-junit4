@@ -29,4 +29,6 @@ public class Student {
 
     private Long createTime;
 
+    private Integer deleteState;
+
 }

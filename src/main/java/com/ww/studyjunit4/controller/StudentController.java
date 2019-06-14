@@ -1,7 +1,9 @@
 package com.ww.studyjunit4.controller;
 
+import com.ww.studyjunit4.api.ApiResult;
 import com.ww.studyjunit4.entity.Student;
 import com.ww.studyjunit4.service.StudentService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "/student")
+@Slf4j
 public class StudentController {
 
     @Autowired
@@ -38,6 +41,7 @@ public class StudentController {
      */
     @RequestMapping(value = "/findByStudentIdReturnEntity")
     public Student findByStudentIdReturnEntity(@RequestBody Student student) {
+        log.info("[findByStudentIdReturnEntity] [入参] [student:{}]", student);
         // return studentService.findByStudentIdReturnEntity(student);
         return null;
     }
@@ -52,7 +56,8 @@ public class StudentController {
      */
     @RequestMapping(value = "/findAllByStudentIdReturnEntity")
     public Student findAllByStudentIdReturnEntity(@RequestBody Student student) {
-       // studentService.findAllByStudentIdReturnEntity(student);
+        log.info("[findAllByStudentIdReturnEntity] [入参] [student:{}]", student);
+        // studentService.findAllByStudentIdReturnEntity(student);
         return null;
     }
 
@@ -65,8 +70,9 @@ public class StudentController {
      * @date: 2019-06-14 10:48
      */
     @RequestMapping(value = "/findByStudentIdReturnList")
-    public List<Student> findByStudentIdReturnList(@RequestBody Student student) {
-       return studentService.findByStudentIdReturnList(student);
+    public ApiResult findByStudentIdReturnList(@RequestBody Student student) {
+        log.info("[findByStudentIdReturnList] [入参] [student:{}]", student);
+        return ApiResult.success(studentService.findByStudentIdReturnList(student));
     }
 
     /**
@@ -79,7 +85,8 @@ public class StudentController {
      */
     @RequestMapping(value = "/findAllByStudentIdReturnList")
     public List<Student> findAllByStudentIdReturnList(@RequestBody Student student) {
-       // return studentService.findAllByStudentIdReturnList(student);
+        log.info("[findAllByStudentIdReturnList] [入参] [student:{}]", student);
+        // return studentService.findAllByStudentIdReturnList(student);
         return null;
     }
 
@@ -92,8 +99,37 @@ public class StudentController {
      * @date: 2019-06-14 10:23
      */
     @RequestMapping(value = "/saveStudent")
-    public Student saveStudent(@RequestBody Student student) {
-        return studentService.saveStudent(student);
+    public ApiResult saveStudent(@RequestBody Student student) {
+        log.info("[saveStudent] [入参] [student:{}]", student);
+        return ApiResult.success(studentService.saveStudent(student).getId());
+    }
+
+    /**
+     * Find all student.
+     * @param:
+     * @throws:
+     * @return: com.ww.studyjunit4.api.ApiResult
+     * @author: Sun
+     * @date: 2019-06-14 12:23
+     */
+    @RequestMapping(value = "/findAll")
+    public ApiResult findAll() {
+        log.info("[findAll] [无入参]");
+        return ApiResult.success(studentService.findAll());
+    }
+
+    /**
+     * Find student by Id.
+     * @param: student
+     * @throws:
+     * @return: com.ww.studyjunit4.api.ApiResult
+     * @author: Sun
+     * @date: 2019-06-14 14:10
+     */
+    @RequestMapping(value = "/findById")
+    public ApiResult findById(@RequestBody Student student) {
+        log.info("[findById] [入参] [student:{}]", student);
+        return ApiResult.success(studentService.findById(student));
     }
 
     /**
@@ -105,8 +141,9 @@ public class StudentController {
      * @date: 2019-06-14 11:24
      */
     @RequestMapping(value = "/updateStudent")
-    public Student updateStudent(@RequestBody Student student) {
-        return studentService.saveStudent(student);
+    public ApiResult updateStudent(@RequestBody Student student) {
+        log.info("[updateStudent] [入参] [student:{}]", student);
+        return ApiResult.success(studentService.saveStudent(student).getId());
     }
 
     /**
@@ -118,8 +155,10 @@ public class StudentController {
      * @date: 2019-06-14 11:26
      */
     @RequestMapping(value = "/deleteStudent")
-    public void deleteStudent(@RequestBody Student student) {
+    public ApiResult deleteStudent(@RequestBody Student student) {
+        log.info("[deleteStudent] [入参] [student:{}]", student);
         studentService.deleteStudent(student);
+        return ApiResult.success();
     }
 
 }
